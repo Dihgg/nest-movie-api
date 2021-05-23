@@ -10,5 +10,27 @@ services:
       - "3306:3306"
     volumes:
       - ./database:/var/lib/mysql
+    networks:
+      - webnet
+  acc-movies-api:
+    container_name: acc-movies-api
+    build:
+      context: ./api
+      target: development
+    volumes:
+      - .:/usr/share/app
+    env_file:
+      - .env
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    command: npm run start:dev
+    depends_on:
+      - acc-movies-db
+    links:
+      - acc-movies-db
+    networks:
+      - webnet
 volumes:
   acc-movies-db:
+networks:
+  webnet:

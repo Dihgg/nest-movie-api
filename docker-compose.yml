@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  acc-movies-db:
+    image: mariadb:latest
+    restart: 'unless-stopped'
+    container_name: acc-movies-db
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database:/var/lib/mysql
+volumes:
+  acc-movies-db:

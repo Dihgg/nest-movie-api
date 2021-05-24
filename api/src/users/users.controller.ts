@@ -11,8 +11,4 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  findOne(@Query('username') username: string) {
-    return this.usersService.findByUsername(username);
-  }
 }

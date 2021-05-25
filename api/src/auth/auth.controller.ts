@@ -3,7 +3,7 @@ import {LocalAuthGuard} from "./guards/local-auth.guard";
 import {AuthService} from "./auth.service";
 import {LoginDto, LoginUserDto} from "../users/dto/login-user.dto";
 import {IncomingMessage} from "http";
-import {ApiBasicAuth, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBasicAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {ApiImplicitBody} from "@nestjs/swagger/dist/decorators/api-implicit-body.decorator";
 
 @Controller('v1/auth')
@@ -14,6 +14,7 @@ export class AuthController {
     ) {}
 
     @ApiTags('auth')
+    @ApiOperation({ summary: 'Authenticate User' })
     @ApiResponse({ status: 201, description: 'The user has been successfully logged in.'})
     @ApiResponse({ status: 401, description: 'Unauthorized login attempt.'})
     @UseGuards(LocalAuthGuard)

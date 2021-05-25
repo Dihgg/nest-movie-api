@@ -4,6 +4,7 @@ import {UserEntity} from "./entities/user.entity";
 import {Repository} from "typeorm";
 import {IUserService} from "./users.service.interface";
 import {CreateUserDto} from "./dto/create-user.dto";
+import {LoginUserDto} from "./dto/login-user.dto";
 
 @Injectable()
 export class UsersService implements IUserService {
@@ -13,7 +14,15 @@ export class UsersService implements IUserService {
     ) {
     }
 
-    async create(user: CreateUserDto): Promise<UserEntity> {
+    private toDto(user: UserEntity): LoginUserDto {
+        return {
+            username: user.username,
+            password: user.password,
+            id: user.id
+        }
+    }
+
+    async create(user: CreateUserDto): Promise<LoginUserDto> {
         if (await this.findByUsername(user.username)) {
             throw new UnprocessableEntityException("User Already Exists");
         } else {
@@ -21,7 +30,7 @@ export class UsersService implements IUserService {
                 username: user.username,
                 password: user.password
             });
-            return this.repository.save(repoUser);
+            return this.toDto(await this.repository.save(repoUser));
         }
 
     }

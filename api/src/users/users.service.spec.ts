@@ -2,9 +2,10 @@ import {Test, TestingModule} from '@nestjs/testing';
 import {UsersService} from './users.service';
 import {getRepositoryToken} from "@nestjs/typeorm";
 import {UserEntity} from "./entities/user.entity";
-import {MockType, repositoryMockFactory} from "../testing";
+import {MockType, repositoryMockFactory, Stub} from "../testing";
 import {Repository} from "typeorm";
 import {IUser} from "./entities/user.interface";
+import {UnprocessableEntityException} from "@nestjs/common";
 
 describe('UsersService', () => {
     let service: UsersService;
@@ -43,6 +44,11 @@ describe('UsersService', () => {
             password: "password"
         });
         expect(response).toBeDefined();
+    });
+
+    it('should not create user', async () => {
+        jest.spyOn(service, 'findByUsername').mockResolvedValue(Stub.getUserEntity());
+        await expect(service.create(Stub.getCreateUserDto())).rejects.toThrow(UnprocessableEntityException);
     });
 
     it('should find user', () => {

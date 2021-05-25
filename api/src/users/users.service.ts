@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, UnprocessableEntityException} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {UserEntity} from "./entities/user.entity";
 import {Repository} from "typeorm";
@@ -13,12 +13,17 @@ export class UsersService implements IUserService {
     ) {
     }
 
-    create(user: CreateUserDto): Promise<UserEntity> {
-        const repoUser = this.repository.create({
-            username: user.username,
-            password: user.password
-        });
-        return this.repository.save(repoUser);
+    async create(user: CreateUserDto): Promise<UserEntity> {
+        if (await this.findByUsername(user.username)) {
+            throw new UnprocessableEntityException("User Already Exists");
+        } else {
+            const repoUser = this.repository.create({
+                username: user.username,
+                password: user.password
+            });
+            return this.repository.save(repoUser);
+        }
+
     }
 
     findByUsername(username: string): Promise<UserEntity> {

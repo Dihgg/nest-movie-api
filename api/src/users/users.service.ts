@@ -5,6 +5,7 @@ import {Repository} from "typeorm";
 import {IUserService} from "./users.service.interface";
 import {CreateUserDto} from "./dto/create-user.dto";
 import {LoginUserDto} from "./dto/login-user.dto";
+import {ERRORS} from "../errors/errors.enum";
 
 @Injectable()
 export class UsersService implements IUserService {
@@ -24,7 +25,7 @@ export class UsersService implements IUserService {
 
     async create(user: CreateUserDto): Promise<LoginUserDto> {
         if (await this.findByUsername(user.username)) {
-            throw new UnprocessableEntityException("User Already Exists");
+            throw new UnprocessableEntityException(ERRORS.USER_ALREALDY_EXISTS);
         } else {
             const repoUser = this.repository.create({
                 username: user.username,

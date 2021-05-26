@@ -1,5 +1,3 @@
-import {Observable} from "rxjs";
-import {AxiosResponse} from "axios";
 import {TmdbMoviesDetails, TmdbMoviesResponseDto} from "./dto/tmdb.movies.response.dto";
 
 export interface IMoviesService {

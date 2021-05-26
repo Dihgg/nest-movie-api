@@ -6,6 +6,7 @@ services:
     container_name: acc-movies-db
     environment:
       MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "acc-movies"
     ports:
       - "3306:3306"
     volumes:
@@ -23,7 +24,7 @@ services:
       - .env
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
-    command: npm run start:dev
+    command: npm run start
     depends_on:
       - acc-movies-db
     links:

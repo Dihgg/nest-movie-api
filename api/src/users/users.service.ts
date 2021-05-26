@@ -6,6 +6,7 @@ import {IUserService} from "./users.service.interface";
 import {CreateUserDto} from "./dto/create-user.dto";
 import {LoginUserDto} from "./dto/login-user.dto";
 import {ERRORS} from "../errors/errors.enum";
+import { hashSync } from 'bcrypt';
 
 @Injectable()
 export class UsersService implements IUserService {
@@ -29,7 +30,7 @@ export class UsersService implements IUserService {
         } else {
             const repoUser = this.repository.create({
                 username: user.username,
-                password: user.password
+                password: hashSync(user.password, 10)
             });
             return this.toDto(await this.repository.save(repoUser));
         }

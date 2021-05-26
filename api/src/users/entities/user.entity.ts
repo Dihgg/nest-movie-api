@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 import {IUser} from "./user.interface";
+import {ListEntity} from "../../list/entities/list.entity";
 
 @Entity()
 export class UserEntity implements IUser {
@@ -11,4 +12,7 @@ export class UserEntity implements IUser {
 
     @Column()
     password: string;
+
+    @OneToMany( type => ListEntity, list => list.user )
+    lists: ListEntity[];
 }

@@ -3,6 +3,7 @@ import {UserEntity} from "../users/entities/user.entity";
 import {IToken} from "../auth/auth.service.interface";
 import {LoginUserDto} from "../users/dto/login-user.dto";
 import {CreateUserDto} from "../users/dto/create-user.dto";
+import { hashSync } from 'bcrypt';
 
 export class Stub {
     static getUser(): IUser {
@@ -13,7 +14,9 @@ export class Stub {
         };
     }
     static getUserEntity(): UserEntity {
-        return this.getUser() as UserEntity;
+        const user = this.getUser() as UserEntity;
+        user.password = hashSync(user.password, 10);
+        return user;
     }
 
     static getCreateUserDto(): CreateUserDto {

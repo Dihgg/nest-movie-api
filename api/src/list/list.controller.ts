@@ -5,7 +5,7 @@ import { UpdateListDto } from './dto/update-list.dto';
 import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
 import {
   ApiCreatedResponse,
-  ApiNotFoundResponse,
+  ApiNotFoundResponse, ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnprocessableEntityResponse
@@ -32,6 +32,7 @@ export class ListController {
   }
 
   @ApiOperation({ summary: 'Get a User List' })
+  @ApiOkResponse( { description: 'List found' } )
   @ApiNotFoundResponse({ description: 'List not found' })
   @Get(':id')
   findOne(@Request() req, @Param('id') id: string) {
@@ -39,6 +40,7 @@ export class ListController {
   }
 
   @ApiOperation({ summary: 'Update a User List' })
+  @ApiOkResponse({ description: 'Updated list' })
   @ApiNotFoundResponse({ description: 'List not found' })
   @Patch(':id')
   update(@Request() req, @Param('id') id: string, @Body() updateListDto: UpdateListDto) {
@@ -46,6 +48,7 @@ export class ListController {
   }
 
   @ApiOperation({ summary: 'Remove a User List' })
+  @ApiOkResponse( { description: 'List deleted'})
   @ApiNotFoundResponse({ description: 'List not found' })
   @Delete(':id')
   remove(@Request() req, @Param('id') id: string) {

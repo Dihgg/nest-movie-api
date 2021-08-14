@@ -1,6 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 import {IUser} from "./user.interface";
 import {ListEntity} from "../../list/entities/list.entity";
+import {RatingEntity} from "../../rating/entities/rating.entity";
 
 @Entity()
 export class UserEntity implements IUser {
@@ -15,4 +16,7 @@ export class UserEntity implements IUser {
 
     @OneToMany( type => ListEntity, list => list.user )
     lists: ListEntity[];
+
+    @OneToMany( type => RatingEntity, rating => rating.user )
+    ratings: RatingEntity[];
 }

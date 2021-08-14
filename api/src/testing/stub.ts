@@ -47,6 +47,7 @@ export class Stub {
             user: Stub.getUserEntity(),
             isPublic: true,
             usersIds: [],
+            ratings: [],
             users: null
         }
     }
@@ -58,6 +59,7 @@ export class Stub {
             user: Stub.getUserEntity(),
             isPublic: false,
             usersIds: [1, 2, 3],
+            ratings: [],
             users: Array<UserEntity>(3).fill(Stub.getUserEntity())
         }
     }

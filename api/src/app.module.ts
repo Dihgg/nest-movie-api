@@ -6,6 +6,7 @@ import {getConnectionOptions} from "typeorm";
 import {AuthModule} from "./auth/auth.module";
 import { MoviesModule } from './movies/movies.module';
 import { ListModule } from './list/list.module';
+import { RatingModule } from './rating/rating.module';
 
 @Module({
     imports: [
@@ -18,7 +19,8 @@ import { ListModule } from './list/list.module';
         }),
         AuthModule,
         MoviesModule,
-        ListModule
+        ListModule,
+        RatingModule
     ],
     controllers: [AppController],
     providers: [AppService],
